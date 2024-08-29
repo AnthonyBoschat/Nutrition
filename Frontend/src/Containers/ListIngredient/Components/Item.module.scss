@@ -1,0 +1,81 @@
+.layout{
+    width: 95%;
+    height: 4.5rem;
+    // background-color: red; //
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 8px;
+    outline: 1px solid black;
+    box-shadow: 3px 3px rgba(0, 0, 0, 0.25);
+
+    &.protein{background: linear-gradient(45deg,rgba(255, 199, 181, 1),rgba(255, 199, 181, 0.500),white);}
+    &.glucid{background: linear-gradient(45deg,rgba(255, 228, 160, 1),rgba(255, 228, 160, 0.500),white);}
+    &.lipid{background: linear-gradient(45deg,rgba(215, 255, 191, 1),rgba(215, 255, 191, 0.500),white);}
+
+    div{
+        // background-color: rgba(255, 0, 0, 0.281); //
+        // outline: 1px solid black; //
+        width: 100%;
+        height: 50%;
+        display: flex;
+        align-items: center;
+
+        &.nameBox{
+            width: 95%;
+            display: flex;
+            justify-content: space-between;
+            button{
+                border: none;
+
+                >i{
+                    font-size: larger;
+                    color: black;
+                }
+                &:hover{
+                    cursor: pointer;
+                }
+                &.active{
+                    opacity: 1;
+                }
+                &.inactive{
+                    opacity: 0.4;
+                    pointer-events: none;
+                }
+            }
+        }
+        &.informationsBox{
+            justify-content: space-evenly;
+        }
+
+        input{
+            outline: 1px solid black; //
+            padding: 0.2rem;
+            border-radius: 4px;
+            font-size: small;
+            box-shadow: 0px 2px 10px -2px rgba(0, 0, 0, 0.15) inset;
+            border: none;
+
+            &.name{
+                background-color: rgba(178, 237, 255, 1);
+                width:40%;
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+            &.information{
+                width: 15%;
+                text-align: center;
+                &.calorie{background-color: rgba(189, 178, 255, 1)}
+                &.protein{background-color: rgba(255, 199, 181, 1)}
+                &.glucid{background-color: rgba(255, 228, 160, 1)}
+                &.lipid{background-color: rgba(215, 255, 191, 1)}
+                &.weight{background-color: rgba(234, 234, 234, 1)}
+                &.contrast{
+                    box-shadow: 0px 3px 3px rgb(0, 0, 0);
+                }
+            }
+        }
+
+        
+    }
+}

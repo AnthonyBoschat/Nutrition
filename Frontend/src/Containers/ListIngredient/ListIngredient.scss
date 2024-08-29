@@ -1,0 +1,66 @@
+div.listIngredient{
+    // background-color: rgba(255, 0, 0, 0.405); //
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    gap: 0.5rem;
+    >div.layout{
+        width: 31%;
+        height: 90%;
+        border-radius: 4px;
+        box-shadow: 3px 3px 4px rgba(0, 0, 0, 0.500);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+
+        &.protein{
+            background: linear-gradient(45deg,rgba(255, 169, 142, 0.500),rgba(255, 199, 181, 0.500),rgba(255, 227, 218, 0.500));
+            div.title{
+                background: linear-gradient(45deg,rgba(255, 199, 181, 1),rgba(255, 228, 220, 1),rgba(255, 255, 255, 1));
+            }
+        }
+        &.glucid{
+            background: linear-gradient(45deg,rgba(255, 211, 99, 0.500),rgba(255, 228, 160, 0.500),rgba(255, 241, 207, 0.500));
+            div.title{
+                background: linear-gradient(45deg,rgba(255, 228, 160, 1),rgba(255, 242, 209, 1),rgba(255, 255, 255, 1));
+            }
+        }
+        &.lipid{
+            background: linear-gradient(45deg,rgba(176, 255, 129, 0.500),rgba(215, 255, 191, 0.500),rgba(235, 255, 223, 0.500));
+            div.title{
+                background: linear-gradient(45deg,rgba(215, 255, 191, 1),rgba(236, 255, 224, 1),rgba(255, 255, 255, 1));
+            }
+        }
+
+        div.title{
+            padding-left: 1.5rem;
+            padding-right: 1.5rem;
+            width: fit-content;
+            height: 1.8rem;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transform: translateY(-50%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            // text-shadow: 0px 0px 1px white;
+            box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.500);
+        }
+
+        >div.ingredients{
+            // outline: 1px solid black; //
+            box-shadow: none;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            width: 90%;
+            height: 90%;
+            gap: 1rem;
+        }
+    }
+}

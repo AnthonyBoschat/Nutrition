@@ -1,0 +1,8 @@
+@keyframes OpacityIn{
+    from{opacity: 0;}
+    to{opacity: 1;}
+}
+
+.animationClass_OpacityIn300{
+    animation: OpacityIn 0.3s linear forwards;
+}
