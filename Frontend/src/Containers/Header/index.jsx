@@ -1,5 +1,5 @@
 import { PATH } from "@Constants/Path"
-import styles from "./Header.module.scss"
+import styles from "./index.module.scss"
 import Button from "@Components/Button"
 import { useLocation, useNavigate } from "react-router-dom"
 
@@ -17,7 +17,7 @@ export default function Header(){
     }
 
     return(
-        <div className={styles.headerLayout}>
+        <div className={styles.layout}>
             <Button onClick={() => navigateTo(PATH.MyIngredients)} text={"Mes ingrédients"}>Mes ingrédients</Button>
         </div>
     )

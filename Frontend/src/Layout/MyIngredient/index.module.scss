@@ -1,4 +1,4 @@
-.MyIngredientsLayout{
+.layout{
     // background-color: rgba(165, 165, 255, 0.729); //
     width: 100%;
     height: 100%;
@@ -8,24 +8,24 @@
     grid-template-rows: 100%;
     // outline: 1px solid black; //
 
-    >.side{
+    .side{
         // outline: 1px solid black; //
         display: flex;
         justify-content: center;
         // margin: 2rem;
         padding: 2rem;
 
-        >.layout{
+        .container{
             background-color: white;
             box-shadow: 8px 6px 4px rgba(0, 0, 0, 0.250);
             border-radius: 10px;
             width: 100%;
 
-            &.leftSide{
+            &.newIngredient{
                 height: 50%;
             }
 
-            &.rightSide{
+            &.listIngredient{
                 height: 100%;
             }
         }

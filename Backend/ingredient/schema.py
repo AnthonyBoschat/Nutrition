@@ -57,10 +57,23 @@ class IngredientQuery(graphene.ObjectType):
     
     
     
-    
-    
-    
+class DeleteIngredient(graphene.Mutation):
+    class Arguments:
+        id = graphene.ID(required=True)
+        
+    success = graphene.Boolean()
+    id = graphene.ID()
 
+    def mutate(self, info, id):
+        try:
+            ingredient = Ingredient.objects.get(pk=id)
+            ingredient.delete()
+            return DeleteIngredient(success = True, id=id)
+        except Ingredient.DoesNotExist:
+            return DeleteIngredient(success = False)
+            
+        
+        
 class UpdateIngredient(graphene.Mutation):
     class Arguments:
         id = graphene.String(required=True)
@@ -138,5 +151,6 @@ class CreateIngredient(graphene.Mutation):
 class IngredientMutation(graphene.ObjectType):
     createIngredient = CreateIngredient.Field()
     updateIngredient = UpdateIngredient.Field()
+    deleteIngredient = DeleteIngredient.Field()
     
 schema = graphene.Schema(query=IngredientQuery, mutation=IngredientMutation)

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import styles from "./NewIngredient.module.scss"
+import styles from "./index.module.scss"
 import { useMutation } from "@apollo/client"
 import { CREATE_INGREDIENT } from "@Query/Ingredient/CreateIngredient"
 import { useDispatch } from "react-redux"
@@ -73,12 +73,12 @@ export default function NewIngredient(){
     }
 
     return(
-        <form className={styles.newIngredientLayout} onSubmit={submit}>
+        <form className={styles.form} onSubmit={submit}>
 
-            <div className={styles.inputs}>
+            <div className={styles.layout}>
                 {Object.keys(inputList).map(key => (
-                    <div key={inputList[key].id} className={styles.line}>
-                        <div className={`${styles.category} ${styles[inputList[key].specialClass]}`}>{inputList[key].text}</div>
+                    <div key={inputList[key].id} className={styles.row}>
+                        <div className={`${styles.label} ${styles[inputList[key].specialClass]}`}>{inputList[key].text}</div>
                         <Input
                             type={"text"}
                             required={true}

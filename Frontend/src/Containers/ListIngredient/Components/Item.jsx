@@ -4,11 +4,14 @@ import Input from "@Components/Input"
 import { UPDATE_INGREDIENT } from "@Query/Ingredient/UpdateIngredient"
 import { useMutation } from "@apollo/client"
 import Button from "@Components/Button"
+import { DELETE_INGREDIENT } from "@Query/Ingredient/DeleteIngredient"
+import { useDispatch } from "react-redux"
+import { delete_ingredient } from "@Redux/Slices/Ingredients"
 
 export default function Item({ingredient}){
 
+    const dispatch = useDispatch()
     const [modificationDetected, setModificationDetected] = useState(false)
-    const [updateIngredient, {data, loading, error}] = useMutation(UPDATE_INGREDIENT)
     // Contient les valeurs stocker en BDD de l'ingredient
     const [ingredientComparison, setIngredientComparison] = useState({
         id:ingredient.id,
@@ -24,6 +27,25 @@ export default function Item({ingredient}){
     // Miroir des modification apporter par l'utilisateur
     const [ingredientState, setIngredientState] = useState({...ingredientComparison})
 
+
+    const [updateIngredient, updateQuery] = useMutation(UPDATE_INGREDIENT, {
+        update(cache, {data}){
+            setModificationDetected(false)
+            const updateIngredient = data.updateIngredient.updateIngredient
+            setIngredientComparison(updateIngredient)
+            setIngredientState(updateIngredient)
+        }
+    })
+
+    const [deleteIngredient, deleteQuery] = useMutation(DELETE_INGREDIENT, {
+        update(cache, {data}){
+            if (data?.deleteIngredient?.success) {
+                const ingredientID = data.deleteIngredient.id
+                dispatch(delete_ingredient(ingredientID))
+            }
+        }
+    })
+    
     // Compare les modifications apporter par l'utilisateur avec les véritables données 
     // donne la possibilité d'enregistrer les modifications si un changement est détecter
     useEffect(() => {
@@ -33,19 +55,6 @@ export default function Item({ingredient}){
         })
     }, [ingredientState])
 
-    const saveModification = () => {
-        updateIngredient({variables:ingredientState})
-    }
-
-    useEffect(() => {
-        if(data && !loading && !error){
-            setModificationDetected(false)
-            const updateIngredient = data.updateIngredient.updateIngredient
-            setIngredientComparison(updateIngredient)
-            setIngredientState(updateIngredient)
-        }
-    }, [data])
-
     const handleChange = (key, newValue) => {
         setIngredientState(current => {
             const copy = {...current}
@@ -53,6 +62,8 @@ export default function Item({ingredient}){
             return copy
         })
     }
+
+    
     
 
     return(
@@ -63,9 +74,21 @@ export default function Item({ingredient}){
                     specialClass={styles.name}
                     type={"text"}
                     value={ingredientState.name} />
-                <Button onClick={saveModification} specialClass={modificationDetected ? styles.active : styles.inactive}>
-                    <i className='fa-solid fa-floppy-disk' ></i>
-                </Button>
+                
+                <div className={styles.buttons}>
+                    <Button onClick={() => updateIngredient({variables:ingredientState})} specialClass={modificationDetected ? styles.active : styles.inactive}>
+                        <i className='fa-solid fa-floppy-disk' ></i>
+                    </Button>
+                    <Button onClick={() => {
+                        const response = window.confirm(`Supprimer ${ingredient.name} ?`)
+                        if(response){
+                            deleteIngredient({variables:{id:ingredient.id}})
+                        }
+                    }}>
+                        <i className="fa-solid fa-trash"></i>
+                    </Button>
+                </div>
+                
             </div>
             <div className={styles.informationsBox}>
                 {Object.entries(ingredient.informations)

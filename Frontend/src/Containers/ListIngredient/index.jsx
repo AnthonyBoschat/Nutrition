@@ -1,5 +1,5 @@
 import Item from "./Components/Item"
-import "./ListIngredient.scss"
+import styles from "./index.module.scss"
 
 export default function ListIngredient({allIngredient}){
 
@@ -11,12 +11,12 @@ export default function ListIngredient({allIngredient}){
     ]
 
     return(
-        <div className="listIngredient">
+        <div className={styles.layout}>
             {boxList.map(box => (
 
-                <div key={box.specialClass} className={`${box.specialClass} layout`}>
-                    <div className="title">{box.text}</div>
-                    <div className="ingredients">
+                <div key={box.specialClass} className={`${styles[box.specialClass]}`}>
+                    <div className={styles.title}>{box.text}</div>
+                    <div className={styles.container}>
                         {allIngredient.map(ingredient => {
                         
                         if(ingredient.range === box.specialClass){

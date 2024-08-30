@@ -25,22 +25,29 @@
             width: 95%;
             display: flex;
             justify-content: space-between;
-            button{
-                border: none;
 
-                >i{
-                    font-size: larger;
-                    color: black;
-                }
-                &:hover{
-                    cursor: pointer;
-                }
-                &.active{
-                    opacity: 1;
-                }
-                &.inactive{
-                    opacity: 0.4;
-                    pointer-events: none;
+            .buttons{
+                width: fit-content;
+                display: flex;
+                gap: 0.5rem;
+                // outline: 1px solid red;
+                button{
+                    border: none;
+    
+                    >i{
+                        font-size: larger;
+                        color: black;
+                    }
+                    &:hover{
+                        cursor: pointer;
+                    }
+                    &.active{
+                        opacity: 1;
+                    }
+                    &.inactive{
+                        opacity: 0.4;
+                        pointer-events: none;
+                    }
                 }
             }
         }

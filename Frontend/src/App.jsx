@@ -1,4 +1,4 @@
-import Header from "@Containers/Header/Header";
+import Header from "@Containers/Header/index";
 import { Route, Routes } from "react-router-dom"
 import MyIngredientPage from "@Pages/MyIngredientPage"
 import { PATH } from "@Constants/Path"

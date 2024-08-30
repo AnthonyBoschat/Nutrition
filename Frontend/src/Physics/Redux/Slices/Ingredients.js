@@ -13,13 +13,18 @@ export const IngredientsSlice = createSlice({
     },
     add_all:(state, action) => {
       state.all.push(action.payload)
+    },
+    delete_ingredient:(state,action) => {
+      const index = state.all.findIndex(ingredient => ingredient.id === action.payload)
+      state.all.splice(index, 1)
     }
   },
 });
 
 export const { 
     set_all,
-    add_all
+    add_all,
+    delete_ingredient
 } = IngredientsSlice.actions;
 
 export const IngredientsReducer = IngredientsSlice.reducer;

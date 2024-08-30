@@ -1,4 +1,4 @@
-.newIngredientLayout{
+.form{
     // background-color: rgba(167, 167, 255, 0.356); //
     // outline: 1px solid black; //
     width: 100%;
@@ -10,7 +10,7 @@
     justify-content: space-between;
     
 
-        .inputs{
+        .layout{
              width: 90%;
             // outline: 1px solid red; //
             height: 100%;
@@ -38,7 +38,7 @@
                 }
             }
 
-            .line{
+            .row{
                 margin-top: 1rem;
                 width: 100%;
                 // outline: 1px solid red; //
@@ -47,7 +47,7 @@
                 height: 2rem;
                 gap: 1rem;
 
-                .category{
+                .label{
                     display: flex;
                     justify-content: center;
                     align-items: center;
