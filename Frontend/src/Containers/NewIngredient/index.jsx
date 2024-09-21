@@ -90,7 +90,9 @@ export default function NewIngredient(){
                     </div>
                 ))}
 
-                <Input specialClass={styles.submit} type={"submit"} value={"Enregistrer"}/>
+                <div className={styles.containerSubmit}>
+                    <Input specialClass={styles.submit} type={"submit"} value={"Enregistrer"}/>
+                </div>
 
             </div>
 
