@@ -25,11 +25,13 @@ export const UPDATE_INGREDIENT = gql`
                 id
                 range
                 name
-                calorie
-                weight
-                protein
-                glucid
-                lipid
+                informations {
+                    calorie
+                    weight
+                    protein
+                    glucid
+                    lipid
+                }
             }
         }
     }

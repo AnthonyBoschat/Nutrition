@@ -6,7 +6,7 @@ import { useMutation } from "@apollo/client"
 import Button from "@Components/Button"
 import { DELETE_INGREDIENT } from "@Query/Ingredient/DeleteIngredient"
 import { useDispatch } from "react-redux"
-import { delete_ingredient } from "@Redux/Slices/Ingredients"
+import { delete_ingredient, update_ingredient } from "@Redux/Slices/Ingredients"
 
 export default function Item({ingredient}){
 
@@ -23,20 +23,39 @@ export default function Item({ingredient}){
         glucid:ingredient.informations.glucid,
         lipid:ingredient.informations.lipid,
     })
+    const [ingredientRange, setIngredientRange] = useState(ingredient.range)
     
     // Miroir des modification apporter par l'utilisateur
     const [ingredientState, setIngredientState] = useState({...ingredientComparison})
 
+    const detectNewRange = (copyIngredientState) => {
+        const infos = {
+            protein:copyIngredientState.protein,
+            glucid:copyIngredientState.glucid,
+            lipid:copyIngredientState.lipid,
+        }
+        const newRange = infos.protein >= infos.glucid && infos.protein >= infos.lipid
+                        ? "protein"
+                        : infos.lipid >= infos.protein && infos.lipid >= infos.glucid 
+                            ? "lipid"
+                            : "glucid"
+        return newRange
 
+
+    }
+
+    // Requête pour mettre à jour un ingrédient
     const [updateIngredient, updateQuery] = useMutation(UPDATE_INGREDIENT, {
         update(cache, {data}){
             setModificationDetected(false)
             const {updateIngredient} = data.updateIngredient
             setIngredientComparison(updateIngredient)
             setIngredientState(updateIngredient)
+            dispatch(update_ingredient(updateIngredient))
         }
     })
 
+    // Requête pour supprimer un ingredient
     const [deleteIngredient, deleteQuery] = useMutation(DELETE_INGREDIENT, {
         update(cache, {data}){
             if (data?.deleteIngredient?.success) {
@@ -59,6 +78,7 @@ export default function Item({ingredient}){
         setIngredientState(current => {
             const copy = {...current}
             copy[key] = parseInt(newValue) ? parseInt(newValue) : newValue
+            copy["range"] = detectNewRange(copy)
             return copy
         })
     }

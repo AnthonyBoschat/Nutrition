@@ -3,6 +3,7 @@ import styles from "./index.module.scss"
 
 export default function ListIngredient({allIngredient}){
 
+    console.log("coucou 2", allIngredient)
 
     const boxList = [
         {specialClass:"protein", text:"Protéines"},

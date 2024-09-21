@@ -17,6 +17,10 @@ export const IngredientsSlice = createSlice({
     delete_ingredient:(state,action) => {
       const index = state.all.findIndex(ingredient => ingredient.id === action.payload)
       state.all.splice(index, 1)
+    },
+    update_ingredient:(state,action) => {
+      const index = state.all.findIndex(ingredient => ingredient.id === action.payload.id)
+      state.all[index] = action.payload
     }
   },
 });
@@ -24,7 +28,8 @@ export const IngredientsSlice = createSlice({
 export const { 
     set_ingredient,
     add_ingredient,
-    delete_ingredient
+    delete_ingredient,
+    update_ingredient
 } = IngredientsSlice.actions;
 
 export const IngredientsReducer = IngredientsSlice.reducer;
