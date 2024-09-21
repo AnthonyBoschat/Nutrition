@@ -8,10 +8,10 @@ export const IngredientsSlice = createSlice({
     all:[]
   },
   reducers: {
-    set_all:(state,action) => {
+    set_ingredient:(state,action) => {
         state.all = action.payload
     },
-    add_all:(state, action) => {
+    add_ingredient:(state, action) => {
       state.all.push(action.payload)
     },
     delete_ingredient:(state,action) => {
@@ -22,8 +22,8 @@ export const IngredientsSlice = createSlice({
 });
 
 export const { 
-    set_all,
-    add_all,
+    set_ingredient,
+    add_ingredient,
     delete_ingredient
 } = IngredientsSlice.actions;
 

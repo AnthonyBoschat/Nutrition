@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useQuery } from '@apollo/client';
 import { useDispatch, useSelector } from 'react-redux';
-import { set_all } from '@Redux/Slices/Ingredients';
+import { set_ingredient } from '@Redux/Slices/Ingredients';
 import MyIngredientLayout from '@Layout/MyIngredient/index';
 import { GET_ALL_INGREDIENT } from '@Query/Ingredient/GetAll';
 
@@ -13,7 +13,7 @@ const MyIngredientsPage = () => {
 
   useEffect(() => {
     if (!loading && !error && data) {
-      dispatch(set_all(data.allIngredient));
+      dispatch(set_ingredient(data.allIngredient));
     }
   }, [data, loading, error]);
 

@@ -3,7 +3,7 @@ import styles from "./index.module.scss"
 import { useMutation } from "@apollo/client"
 import { CREATE_INGREDIENT } from "@Query/Ingredient/CreateIngredient"
 import { useDispatch } from "react-redux"
-import { add_all } from "@Redux/Slices/Ingredients"
+import { add_ingredient } from "@Redux/Slices/Ingredients"
 import Input from "@Components/Input"
 
 export default function NewIngredient(){
@@ -13,7 +13,7 @@ export default function NewIngredient(){
 
     useEffect(() => {
         if(data && !loading && !error){
-            dispatch(add_all(data.createIngredient.newIngredient))
+            dispatch(add_ingredient(data.createIngredient.newIngredient))
         }
     }, [data, loading, error])
 
