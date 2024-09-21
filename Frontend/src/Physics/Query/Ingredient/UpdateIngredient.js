@@ -10,9 +10,9 @@ export const UPDATE_INGREDIENT = gql`
         $protein: Float!,
         $glucid: Float!,
         $lipid: Float!
-    ){
+    ) {
         updateIngredient(
-            id: $id
+            id: $id,
             range: $range,
             name: $name,
             calorie: $calorie,
@@ -20,7 +20,7 @@ export const UPDATE_INGREDIENT = gql`
             protein: $protein,
             glucid: $glucid,
             lipid: $lipid
-        ){
+        ) {
             updateIngredient{
                 id
                 range

@@ -31,7 +31,7 @@ export default function Item({ingredient}){
     const [updateIngredient, updateQuery] = useMutation(UPDATE_INGREDIENT, {
         update(cache, {data}){
             setModificationDetected(false)
-            const updateIngredient = data.updateIngredient.updateIngredient
+            const {updateIngredient} = data.updateIngredient
             setIngredientComparison(updateIngredient)
             setIngredientState(updateIngredient)
         }

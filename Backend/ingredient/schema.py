@@ -89,18 +89,18 @@ class UpdateIngredient(graphene.Mutation):
     
     def mutate(self, info, id, range, name, calorie, weight, protein, glucid, lipid):
         try:
-            updateIngredient = Ingredient.objects.get(pk=id)
+            ingredient = Ingredient.objects.get(pk=id)
             
-            updateIngredient.name = name
-            updateIngredient.range = range
-            updateIngredient.calorie = calorie
-            updateIngredient.weight = weight
-            updateIngredient.protein = protein
-            updateIngredient.glucid = glucid
-            updateIngredient.lipid = lipid
+            ingredient.name = name
+            ingredient.range = range
+            ingredient.calorie = calorie
+            ingredient.weight = weight
+            ingredient.protein = protein
+            ingredient.glucid = glucid
+            ingredient.lipid = lipid
 
-            updateIngredient.save()
-            return UpdateIngredient(updateIngredient=updateIngredient)
+            ingredient.save()
+            return UpdateIngredient(updateIngredient=ingredient)
         
         except Ingredient.DoesNotExist:
             return UpdateIngredient(updateIngredient=None)
