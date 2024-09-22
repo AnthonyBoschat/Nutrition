@@ -12,27 +12,15 @@ export default function Item({ingredient}){
 
     const dispatch = useDispatch()
     const [modificationDetected, setModificationDetected] = useState(false)
-    // Contient les valeurs stocker en BDD de l'ingredient
-    const [ingredientComparison, setIngredientComparison] = useState({
-        id:ingredient.id,
-        name:ingredient.name,
-        range:ingredient.range,
-        calorie:ingredient.informations.calorie,
-        weight:ingredient.informations.weight,
-        protein:ingredient.informations.protein,
-        glucid:ingredient.informations.glucid,
-        lipid:ingredient.informations.lipid,
-    })
-    const [ingredientRange, setIngredientRange] = useState(ingredient.range)
-    
     // Miroir des modification apporter par l'utilisateur
-    const [ingredientState, setIngredientState] = useState({...ingredientComparison})
+    const [ingredientComparison, setIngredientComparison] = useState({...ingredient})
+    
 
     const detectNewRange = (copyIngredientState) => {
         const infos = {
-            protein:copyIngredientState.protein,
-            glucid:copyIngredientState.glucid,
-            lipid:copyIngredientState.lipid,
+            protein:copyIngredientState.informations.protein,
+            glucid:copyIngredientState.informations.glucid,
+            lipid:copyIngredientState.informations.lipid,
         }
         const newRange = infos.protein >= infos.glucid && infos.protein >= infos.lipid
                         ? "protein"
@@ -40,18 +28,25 @@ export default function Item({ingredient}){
                             ? "lipid"
                             : "glucid"
         return newRange
-
-
     }
 
+    
     // Requête pour mettre à jour un ingrédient
     const [updateIngredient, updateQuery] = useMutation(UPDATE_INGREDIENT, {
+        variables:{
+            id:ingredientComparison.id,
+            name:ingredientComparison.name,
+            range:ingredientComparison.range,
+            calorie:ingredientComparison.informations.calorie,
+            weight:ingredientComparison.informations.weight,
+            protein:ingredientComparison.informations.protein,
+            glucid:ingredientComparison.informations.glucid,
+            lipid:ingredientComparison.informations.lipid,
+        },
         update(cache, {data}){
-            setModificationDetected(false)
             const {updateIngredient} = data.updateIngredient
-            setIngredientComparison(updateIngredient)
-            setIngredientState(updateIngredient)
             dispatch(update_ingredient(updateIngredient))
+            setModificationDetected(false)
         }
     })
 
@@ -68,23 +63,38 @@ export default function Item({ingredient}){
     // Compare les modifications apporter par l'utilisateur avec les véritables données 
     // donne la possibilité d'enregistrer les modifications si un changement est détecter
     useEffect(() => {
-        setModificationDetected(false)
-        Object.keys(ingredientState).map(key => {
-            if(ingredientState[key].toString() !== ingredientComparison[key].toString()){setModificationDetected(true)}
-        })
-    }, [ingredientState])
+        if(ingredientComparison){
+            setModificationDetected(false)
+            if(ingredientComparison.name !== ingredient.name){
+                setModificationDetected(true)
+            }
+            Object.keys(ingredientComparison.informations)
+            .filter(([key]) => key !== "__typename")
+            .map(key => {
+                if(ingredientComparison.informations[key].toString() !== ingredient.informations[key].toString()){
+                    setModificationDetected(true)
+                }
+            })
+        }
+    }, [ingredientComparison])
 
     const handleChange = (key, newValue) => {
-        setIngredientState(current => {
-            const copy = {...current}
-            copy[key] = parseInt(newValue) ? parseInt(newValue) : newValue
-            copy["range"] = detectNewRange(copy)
-            return copy
+        setIngredientComparison(current => {
+            const copy = {...current, informations: {...current.informations}}
+            if(key === "name"){
+                copy["name"] = newValue
+                return copy
+            }
+            if(parseInt(newValue)){
+                copy.informations[key] = parseInt(newValue)
+                copy["range"] = detectNewRange(copy)
+                return copy
+            }else{
+                return current
+            }
+            
         })
     }
-
-    
-    
 
     return(
         <div className={`${styles.layout} ${styles[ingredient.range]}`}>
@@ -93,10 +103,10 @@ export default function Item({ingredient}){
                     handleChange={(newValue) => handleChange("name", newValue)}
                     specialClass={styles.name}
                     type={"text"}
-                    value={ingredientState.name} />
+                    value={ingredientComparison.name} />
                 
                 <div className={styles.buttons}>
-                    <Button onClick={() => updateIngredient({variables:ingredientState})} specialClass={modificationDetected ? styles.active : styles.inactive}>
+                    <Button onClick={() => updateIngredient()} specialClass={modificationDetected ? styles.active : styles.inactive}>
                         <i className='fa-solid fa-floppy-disk' ></i>
                     </Button>
                     <Button onClick={() => {
@@ -119,7 +129,7 @@ export default function Item({ingredient}){
                         handleChange={(newValue) => handleChange(information[0], newValue)}
                         specialClass={`${styles[information[0]]} ${styles.information} ${information[0] === ingredient.range ? styles.contrast : ""}`}
                         type={"text"}
-                        value={ingredientState[information[0]]} />
+                        value={ingredientComparison.informations[information[0]] ? ingredientComparison.informations[information[0]] : 0} />
                 ))}
             </div>
         </div>
